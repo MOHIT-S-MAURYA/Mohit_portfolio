@@ -1,0 +1,195 @@
+WARNING 2025-06-30 21:14:56,674 middleware 55135 6183219200 4xx response: {'status_code': 404, 'path': '/apple-touch-icon-precomposed.png', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>}
+WARNING 2025-06-30 21:14:56,675 middleware 55135 6200045568 4xx response: {'status_code': 404, 'path': '/apple-touch-icon.png', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>}
+WARNING 2025-06-30 21:14:56,676 middleware 55135 6216871936 4xx response: {'status_code': 404, 'path': '/favicon.ico', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>}
+WARNING 2025-06-30 21:14:56,677 log 55135 6183219200 Not Found: /apple-touch-icon-precomposed.png
+WARNING 2025-06-30 21:14:56,677 log 55135 6200045568 Not Found: /apple-touch-icon.png
+WARNING 2025-06-30 21:14:56,677 log 55135 6216871936 Not Found: /favicon.ico
+WARNING 2025-06-30 21:14:56,678 basehttp 55135 6200045568 "GET /apple-touch-icon.png HTTP/1.1" 404 3991
+WARNING 2025-06-30 21:14:56,678 basehttp 55135 6183219200 "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4027
+WARNING 2025-06-30 21:14:56,678 basehttp 55135 6216871936 "GET /favicon.ico HTTP/1.1" 404 3964
+ERROR 2025-06-30 21:25:45,072 middleware 57801 6123810816 Unexpected error: {'path': '/', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>, 'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15', 'exception_type': 'NoReverseMatch', 'exception_message': "Reverse for 'projects' not found. 'projects' is not a valid view function or pattern name.", 'traceback': 'Traceback (most recent call last):\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 192, in _view_wrapper\n    result = _process_exception(request, e)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 190, in _view_wrapper\n    response = view_func(request, *args, **kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/portfolio/views.py", line 77, in home\n    return render(request, \'portfolio/home.html\', context)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render\n    content = loader.render_to_string(template_name, context, request, using=using)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string\n    return template.render(context, request)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render\n    return self.template.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render\n    return self._render(context)\n           ~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render\n    return self.nodelist.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render\n    return compiled_parent._render(context)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render\n    return self.nodelist.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render\n    result = block.nodelist.render(context)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render\n    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/base.py", line 98, in reverse\n    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix\n    raise NoReverseMatch(msg)\ndjango.urls.exceptions.NoReverseMatch: Reverse for \'projects\' not found. \'projects\' is not a valid view function or pattern name.\n'}
+ERROR 2025-06-30 21:25:45,115 log 57801 6123810816 Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/portfolio/views.py", line 77, in home
+    return render(request, 'portfolio/home.html', context)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'projects' not found. 'projects' is not a valid view function or pattern name.
+ERROR 2025-06-30 21:25:45,117 middleware 57801 6123810816 5xx response: {'status_code': 500, 'path': '/', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>}
+ERROR 2025-06-30 21:25:45,117 basehttp 57801 6123810816 "GET / HTTP/1.1" 500 179159
+ERROR 2025-06-30 21:25:56,710 middleware 57801 6123810816 Unexpected error: {'path': '/', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>, 'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15', 'exception_type': 'NoReverseMatch', 'exception_message': "Reverse for 'projects' not found. 'projects' is not a valid view function or pattern name.", 'traceback': 'Traceback (most recent call last):\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 192, in _view_wrapper\n    result = _process_exception(request, e)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 190, in _view_wrapper\n    response = view_func(request, *args, **kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/portfolio/views.py", line 77, in home\n    return render(request, \'portfolio/home.html\', context)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render\n    content = loader.render_to_string(template_name, context, request, using=using)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string\n    return template.render(context, request)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render\n    return self.template.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render\n    return self._render(context)\n           ~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render\n    return self.nodelist.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render\n    return compiled_parent._render(context)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render\n    return self.nodelist.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render\n    result = block.nodelist.render(context)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render\n    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/base.py", line 98, in reverse\n    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix\n    raise NoReverseMatch(msg)\ndjango.urls.exceptions.NoReverseMatch: Reverse for \'projects\' not found. \'projects\' is not a valid view function or pattern name.\n'}
+ERROR 2025-06-30 21:25:56,754 log 57801 6123810816 Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/portfolio/views.py", line 77, in home
+    return render(request, 'portfolio/home.html', context)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'projects' not found. 'projects' is not a valid view function or pattern name.
+ERROR 2025-06-30 21:25:56,756 middleware 57801 6123810816 5xx response: {'status_code': 500, 'path': '/', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>}
+ERROR 2025-06-30 21:25:56,756 basehttp 57801 6123810816 "GET / HTTP/1.1" 500 179007
+ERROR 2025-06-30 21:32:48,020 middleware 59980 6167064576 Unexpected error: {'path': '/', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>, 'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15', 'exception_type': 'NoReverseMatch', 'exception_message': "Reverse for 'projects' not found. 'projects' is not a valid view function or pattern name.", 'traceback': 'Traceback (most recent call last):\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response\n    response = wrapped_callback(request, *callback_args, **callback_kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 192, in _view_wrapper\n    result = _process_exception(request, e)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 190, in _view_wrapper\n    response = view_func(request, *args, **kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/portfolio/views.py", line 77, in home\n    return render(request, \'portfolio/home.html\', context)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render\n    content = loader.render_to_string(template_name, context, request, using=using)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string\n    return template.render(context, request)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render\n    return self.template.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render\n    return self._render(context)\n           ~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render\n    return self.nodelist.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render\n    return compiled_parent._render(context)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render\n    return self.nodelist.render(context)\n           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render\n    result = block.nodelist.render(context)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render\n    return SafeString("".join([node.render_annotated(context) for node in self]))\n                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated\n    return self.render(context)\n           ~~~~~~~~~~~^^^^^^^^^\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render\n    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/base.py", line 98, in reverse\n    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)\n  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix\n    raise NoReverseMatch(msg)\ndjango.urls.exceptions.NoReverseMatch: Reverse for \'projects\' not found. \'projects\' is not a valid view function or pattern name.\n'}
+ERROR 2025-06-30 21:32:48,057 log 59980 6167064576 Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/portfolio/views.py", line 77, in home
+    return render(request, 'portfolio/home.html', context)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/Users/mohitmaurya/dev/github projects/mohit/.venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'projects' not found. 'projects' is not a valid view function or pattern name.
+ERROR 2025-06-30 21:32:48,059 middleware 59980 6167064576 5xx response: {'status_code': 500, 'path': '/', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>}
+ERROR 2025-06-30 21:32:48,059 basehttp 59980 6167064576 "GET / HTTP/1.1" 500 179007

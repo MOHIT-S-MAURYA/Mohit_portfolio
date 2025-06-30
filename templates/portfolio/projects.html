@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects - {{ profile.name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+<!-- Projects Hero Section -->
+<section class="projects-hero py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4 fw-bold mb-4">My Projects</h1>
+                <p class="lead">A showcase of my recent work and personal projects</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="projects-grid py-5">
+    <div class="container">
+        {% if projects %}
+            <div class="row">
+                {% for project in projects %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="project-card">
+                            <div class="project-image">
+                                {% if project.image %}
+                                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid">
+                                {% else %}
+                                    <div class="project-placeholder">
+                                        <i class="fas fa-image"></i>
+                                        <p>No Image</p>
+                                    </div>
+                                {% endif %}
+                                <div class="project-overlay">
+                                    <div class="project-links">
+                                        <a href="{% url 'portfolio:project_detail' project.pk %}" class="btn btn-light btn-sm me-2">
+                                            <i class="fas fa-eye"></i> View Details
+                                        </a>
+                                        {% if project.live_url %}
+                                            <a href="{{ project.live_url }}" class="btn btn-primary btn-sm me-2" target="_blank">
+                                                <i class="fas fa-external-link-alt"></i> Live Demo
+                                            </a>
+                                        {% endif %}
+                                        {% if project.github_url %}
+                                            <a href="{{ project.github_url }}" class="btn btn-outline-light btn-sm" target="_blank">
+                                                <i class="fab fa-github"></i> Code
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="project-title">{{ project.title }}</h5>
+                                    {% if project.is_featured %}
+                                        <span class="badge bg-primary">Featured</span>
+                                    {% endif %}
+                                </div>
+                                <p class="project-description">{{ project.short_description }}</p>
+                                <div class="project-tech mb-3">
+                                    {% for tech in project.get_technologies_list %}
+                                        <span class="tech-tag">{{ tech }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="project-meta">
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar"></i> {{ project.created_date|date:"M Y" }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="Projects pagination">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1">First</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ num }}</span>
+                                        </li>
+                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="row">
+                <div class="col-12 text-center py-5">
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open fa-5x text-muted mb-4"></i>
+                        <h3 class="text-muted">No Projects Yet</h3>
+                        <p class="text-muted">Projects will be displayed here once they are added.</p>
+                        <a href="{% url 'portfolio:contact' %}" class="btn btn-primary">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>Have a Project in Mind?</h2>
+                <p class="lead">I'm always interested in new opportunities and collaborations.</p>
+                <a href="{% url 'portfolio:contact' %}" class="btn btn-primary btn-lg">Let's Talk</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

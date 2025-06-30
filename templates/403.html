@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Access Forbidden - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="error-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 text-center">
+                <div class="error-content">
+                    <h1 class="error-code">403</h1>
+                    <h2 class="error-title">Access Forbidden</h2>
+                    <p class="error-description">
+                        You don't have permission to access this resource.
+                    </p>
+                    <div class="error-actions">
+                        <a href="{% url 'portfolio:home' %}" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="{% url 'portfolio:contact' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-envelope"></i> Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.error-content {
+    padding: 2rem;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: 900;
+    color: #ffc107;
+    margin-bottom: 0;
+    line-height: 1;
+}
+
+.error-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark, #333);
+    margin-bottom: 1rem;
+}
+
+.error-description {
+    font-size: 1.1rem;
+    color: var(--text-muted, #666);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.error-actions .btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.error-actions .btn i {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .error-code {
+        font-size: 6rem;
+    }
+    
+    .error-title {
+        font-size: 2rem;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .error-actions .btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+</style>
+{% endblock %}

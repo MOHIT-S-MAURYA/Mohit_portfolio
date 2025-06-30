@@ -1,0 +1,672 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact - {{ profile.name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+<!-- Contact Hero Section -->
+<section class="contact-hero py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-4 fw-bold mb-4">Get In Touch</h1>
+                <p class="lead">Let's discuss your project and how we can work together</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="row">
+                    <!-- Contact Form -->
+                    <div class="col-lg-8 mb-5">
+                        <div class="contact-form">
+                            <h3 class="mb-4">Send me a message</h3>
+                            
+                            <!-- Form Instructions -->
+                            <div class="alert alert-info mb-4">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Before you send:</strong> Please provide as much detail as possible about your project or inquiry. This helps me give you a more accurate and helpful response.
+                            </div>
+                            
+                            <form method="post" id="contactForm" novalidate>
+                                {% csrf_token %}
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                                            Name *
+                                            {% if form.name.help_text %}
+                                                <small class="text-muted">({{ form.name.help_text }})</small>
+                                            {% endif %}
+                                        </label>
+                                        {{ form.name }}
+                                        {% if form.name.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {% for error in form.name.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        <div class="field-validation-message" data-field="name"></div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.email.id_for_label }}" class="form-label">
+                                            Email *
+                                            {% if form.email.help_text %}
+                                                <small class="text-muted">({{ form.email.help_text }})</small>
+                                            {% endif %}
+                                        </label>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {% for error in form.email.errors %}
+                                                    <div>{{ error }}</div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        <div class="field-validation-message" data-field="email"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.subject.id_for_label }}" class="form-label">
+                                        Subject *
+                                        {% if form.subject.help_text %}
+                                            <small class="text-muted">({{ form.subject.help_text }})</small>
+                                        {% endif %}
+                                    </label>
+                                    {{ form.subject }}
+                                    {% if form.subject.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.subject.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="field-validation-message" data-field="subject"></div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.message.id_for_label }}" class="form-label">
+                                        Message *
+                                        {% if form.message.help_text %}
+                                            <small class="text-muted">({{ form.message.help_text }})</small>
+                                        {% endif %}
+                                    </label>
+                                    {{ form.message }}
+                                    {% if form.message.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.message.errors %}
+                                                <div>{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="field-validation-message" data-field="message"></div>
+                                    <div class="form-text">
+                                        <span id="message-counter">0</span> / 2000 characters
+                                    </div>
+                                </div>
+                                
+                                <!-- Honeypot field (hidden) -->
+                                <div style="display: none;">
+                                    <label for="website">Website</label>
+                                    <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+                                </div>
+                                
+                                <!-- Form validation summary -->
+                                {% if form.non_field_errors %}
+                                    <div class="alert alert-danger mb-3">
+                                        {% for error in form.non_field_errors %}
+                                            <div>{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">terms and conditions</a> 
+                                            (<a href="{% url 'portfolio:terms' %}" target="_blank">view full terms</a>) *
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                        <span class="btn-text">
+                                            <i class="fas fa-paper-plane"></i> Send Message
+                                        </span>
+                                        <span class="btn-loading d-none">
+                                            <i class="fas fa-spinner fa-spin"></i> Sending...
+                                        </span>
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <!-- Form Success/Error Messages -->
+                            <div id="form-messages" class="mt-3"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div class="col-lg-4">
+                        <div class="contact-info">
+                            <h3 class="mb-4">Let's Connect</h3>
+                            
+                            {% if profile %}
+                                {% if profile.email %}
+                                    <div class="contact-item mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="contact-icon me-3">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">Email</h6>
+                                                <a href="mailto:{{ profile.email }}" class="text-decoration-none">
+                                                    {{ profile.email }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if profile.phone %}
+                                    <div class="contact-item mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="contact-icon me-3">
+                                                <i class="fas fa-phone"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">Phone</h6>
+                                                <a href="tel:{{ profile.phone }}" class="text-decoration-none">
+                                                    {{ profile.phone }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if profile.location %}
+                                    <div class="contact-item mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="contact-icon me-3">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">Location</h6>
+                                                <p class="mb-0">{{ profile.location }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            
+                            <!-- Social Links -->
+                            <div class="social-links mt-4">
+                                <h6 class="mb-3">Follow Me</h6>
+                                <div class="d-flex">
+                                    {% if profile.linkedin %}
+                                        <a href="{{ profile.linkedin }}" class="social-link me-3" target="_blank">
+                                            <i class="fab fa-linkedin"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if profile.github %}
+                                        <a href="{{ profile.github }}" class="social-link me-3" target="_blank">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if profile.twitter %}
+                                        <a href="{{ profile.twitter }}" class="social-link me-3" target="_blank">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if profile.website %}
+                                        <a href="{{ profile.website }}" class="social-link" target="_blank">
+                                            <i class="fas fa-globe"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle">Quick answers to common questions</p>
+                </div>
+                
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                What services do you offer?
+                            </button>
+                        </h2>
+                        <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                I offer full-stack web development services, including frontend development with modern frameworks, 
+                                backend development, database design, and deployment. I also provide consultation on architecture 
+                                and technology choices.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                How long does a typical project take?
+                            </button>
+                        </h2>
+                        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Project timelines vary depending on complexity and scope. A simple website might take 2-4 weeks, 
+                                while a complex web application could take 2-6 months. I always provide detailed timelines 
+                                during the planning phase.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                Do you work with clients remotely?
+                            </button>
+                        </h2>
+                        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, I work with clients worldwide. I'm comfortable with remote collaboration using tools like 
+                                Slack, Zoom, and project management platforms. I maintain regular communication throughout 
+                                the project lifecycle.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                What is your development process?
+                            </button>
+                        </h2>
+                        <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                My process includes: 1) Discovery and planning, 2) Design and wireframing, 3) Development with 
+                                regular check-ins, 4) Testing and quality assurance, 5) Deployment and launch, 6) Post-launch 
+                                support and maintenance.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- Terms and Conditions Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="terms-content">
+                    <h6><i class="fas fa-envelope me-2"></i>Contact Form Usage Terms</h6>
+                    <p>By submitting this contact form, you acknowledge and agree to the following terms:</p>
+                    
+                    <div class="terms-section">
+                        <h6><i class="fas fa-info-circle me-2"></i>Purpose and Use</h6>
+                        <ul>
+                            <li>This contact form is intended for professional inquiries, project discussions, collaboration opportunities, and general business communication.</li>
+                            <li>The information you provide will be used solely for responding to your inquiry and maintaining professional correspondence.</li>
+                            <li>I reserve the right to decline or not respond to inquiries that are not relevant to my professional services.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h6><i class="fas fa-shield-alt me-2"></i>Data Privacy and Protection</h6>
+                        <ul>
+                            <li><strong>Data Collection:</strong> We collect only the information you voluntarily provide through this form (name, email, subject, and message).</li>
+                            <li><strong>Data Storage:</strong> Your information is stored securely and will be retained only as long as necessary to respond to your inquiry and maintain our professional relationship.</li>
+                            <li><strong>Third-Party Sharing:</strong> Your personal information will never be sold, shared, or disclosed to third parties without your explicit consent, except as required by law.</li>
+                            <li><strong>Data Rights:</strong> You have the right to request access to, correction of, or deletion of your personal data at any time.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h6><i class="fas fa-clock me-2"></i>Response and Communication</h6>
+                        <ul>
+                            <li>I aim to respond to all legitimate inquiries within 24-48 hours during business days (Monday-Friday).</li>
+                            <li>Response times may be longer during weekends, holidays, or periods of high volume.</li>
+                            <li>Complex inquiries may require additional time for a comprehensive response.</li>
+                            <li>No guarantee is made regarding response time or that a response will be provided to every inquiry.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h6><i class="fas fa-exclamation-triangle me-2"></i>Prohibited Content and Conduct</h6>
+                        <ul>
+                            <li><strong>Sensitive Information:</strong> Do not include passwords, payment details, social security numbers, or other sensitive personal information.</li>
+                            <li><strong>Spam and Abuse:</strong> Spam messages, repeated submissions, abusive language, or inappropriate content will result in blocking and may be reported to authorities.</li>
+                            <li><strong>Legal Content:</strong> Do not submit content that is illegal, defamatory, harassing, or violates any applicable laws or regulations.</li>
+                            <li><strong>Rate Limiting:</strong> This form is limited to prevent abuse. Excessive submissions may result in temporary blocking.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h6><i class="fas fa-handshake me-2"></i>Professional Relationship</h6>
+                        <ul>
+                            <li>Submitting this form does not create any contractual relationship or obligation for services.</li>
+                            <li>Any discussions about potential projects or collaborations are preliminary until formally agreed upon in writing.</li>
+                            <li>Confidential business information should not be shared through this form without prior arrangement.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h6><i class="fas fa-gavel me-2"></i>Legal and Disclaimers</h6>
+                        <ul>
+                            <li><strong>Accuracy:</strong> By submitting, you confirm that all information provided is accurate and truthful.</li>
+                            <li><strong>Limitation of Liability:</strong> I am not liable for any damages resulting from the use of this contact form or any subsequent communication.</li>
+                            <li><strong>Terms Updates:</strong> These terms may be updated periodically. Continued use of the form constitutes acceptance of any changes.</li>
+                            <li><strong>Governing Law:</strong> These terms are governed by applicable local laws and regulations.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="terms-section">
+                        <h6><i class="fas fa-envelope-open me-2"></i>Contact for Questions</h6>
+                        <p>If you have questions about these terms, data privacy, or need to exercise your data rights, please contact me directly through alternative means or specify your concerns in your message.</p>
+                    </div>
+                    
+                    <div class="terms-footer">
+                        <p><small><strong>Last Updated:</strong> June 2025</small></p>
+                        <p><small>By clicking "I agree to the terms and conditions" and submitting this form, you acknowledge that you have read, understood, and agree to be bound by these terms.</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+.contact-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.contact-item {
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+}
+
+.contact-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-control.is-valid {
+    border-color: #28a745;
+    background-image: none;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+}
+
+.field-validation-message {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+    padding: 1rem 1.25rem;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #0c5460;
+}
+
+.faq-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.accordion-button {
+    background: white;
+    border: none;
+    border-radius: 10px !important;
+    font-weight: 600;
+    color: #333;
+}
+
+.accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.accordion-body {
+    background: #f8f9fa;
+    border-radius: 0 0 10px 10px;
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-check-input:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+.form-check-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+}
+
+.btn-loading {
+    display: none;
+}
+
+#message-counter {
+    font-weight: 600;
+}
+
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px 15px 0 0;
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+/* Terms and Conditions Modal Styles */
+.terms-content {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.terms-section {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.terms-section h6 {
+    color: #007bff;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.terms-section h6 i {
+    color: #007bff;
+    font-size: 1rem;
+}
+
+.terms-section ul {
+    margin-bottom: 0;
+    padding-left: 1.2rem;
+}
+
+.terms-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.terms-section li strong {
+    color: #495057;
+}
+
+.terms-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid #e9ecef;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.terms-footer p {
+    margin-bottom: 0.5rem;
+}
+
+#termsModal .modal-dialog {
+    max-width: 800px;
+}
+
+#termsModal .modal-body {
+    padding: 1.5rem;
+}
+
+/* Scrollbar styling for terms content */
+.terms-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terms-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.terms-content::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 3px;
+}
+
+.terms-content::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+</style>
+{% endblock %}

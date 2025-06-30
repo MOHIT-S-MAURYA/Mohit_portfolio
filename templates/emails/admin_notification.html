@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Contact Form Message</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .content {
+            padding: 30px;
+        }
+        .message-box {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #666;
+        }
+        .info-value {
+            color: #333;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+        .alert {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1976d2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 New Contact Message</h1>
+            <p>You've received a new message from your portfolio website</p>
+        </div>
+        
+        <div class="content">
+            <div class="alert">
+                <strong>New Contact Form Submission</strong><br>
+                Received on {{ timestamp|date:"F j, Y" }} at {{ timestamp|time:"g:i A" }}
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-label">👤 Name:</div>
+                <div class="info-value">{{ name }}</div>
+                
+                <div class="info-label">📧 Email:</div>
+                <div class="info-value">{{ email }}</div>
+                
+                <div class="info-label">📋 Subject:</div>
+                <div class="info-value">{{ subject }}</div>
+            </div>
+            
+            <div class="message-box">
+                <h3 style="margin-top: 0; color: #333;">💬 Message:</h3>
+                <p style="margin-bottom: 0; white-space: pre-line;">{{ message }}</p>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 5px;">
+                <p style="margin: 0; color: #856404;">
+                    <strong>💡 Next Steps:</strong><br>
+                    Reply to {{ email }} to respond to this inquiry.
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>This email was automatically generated from your portfolio website contact form.</p>
+            <p>© {% now "Y" %} Portfolio Website</p>
+        </div>
+    </div>
+</body>
+</html>

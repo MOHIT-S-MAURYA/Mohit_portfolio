@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - {{ profile.name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+<!-- Project Hero Section -->
+<section class="project-hero py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'portfolio:home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'portfolio:projects' %}">Projects</a></li>
+                        <li class="breadcrumb-item active">{{ project.title }}</li>
+                    </ol>
+                </nav>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <h1 class="display-5 fw-bold me-3">{{ project.title }}</h1>
+                    {% if project.is_featured %}
+                        <span class="badge bg-primary fs-6">Featured</span>
+                    {% endif %}
+                </div>
+                
+                <p class="lead mb-4">{{ project.description }}</p>
+                
+                <div class="project-meta mb-4">
+                    <div class="row">
+                        <div class="col-sm-6 mb-2">
+                            <strong>Date:</strong> {{ project.created_date|date:"F Y" }}
+                        </div>
+                        <div class="col-sm-6 mb-2">
+                            <strong>Technologies:</strong>
+                            <div class="mt-1">
+                                {% for tech in project.get_technologies_list %}
+                                    <span class="badge bg-secondary me-1">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-links">
+                    {% if project.live_url %}
+                        <a href="{{ project.live_url }}" class="btn btn-primary btn-lg me-3" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> View Live Site
+                        </a>
+                    {% endif %}
+                    {% if project.github_url %}
+                        <a href="{{ project.github_url }}" class="btn btn-outline-primary btn-lg" target="_blank">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="project-image-large">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded-3 shadow-lg">
+                    {% else %}
+                        <div class="project-placeholder-large">
+                            <i class="fas fa-image"></i>
+                            <p>No Image Available</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details Section -->
+<section class="project-details py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="project-content bg-white p-4 rounded-3 shadow-sm">
+                    <h3 class="mb-4">Project Overview</h3>
+                    
+                    <!-- This would be where you'd add more detailed project content -->
+                    <!-- For now, we'll use the description -->
+                    <div class="project-description">
+                        {{ project.description|linebreaks }}
+                    </div>
+                    
+                    <!-- Key Features Section -->
+                    <h4 class="mt-5 mb-3">Key Features</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Responsive Design</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Modern UI/UX</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Cross-browser Compatible</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Fast Performance</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> SEO Optimized</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Secure & Scalable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="project-sidebar">
+                    <!-- Technical Stack -->
+                    <div class="sidebar-card bg-white p-4 rounded-3 shadow-sm mb-4">
+                        <h5 class="mb-3">Technical Stack</h5>
+                        <div class="tech-stack">
+                            {% for tech in project.get_technologies_list %}
+                                <span class="tech-badge">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Project Info -->
+                    <div class="sidebar-card bg-white p-4 rounded-3 shadow-sm mb-4">
+                        <h5 class="mb-3">Project Info</h5>
+                        <div class="info-item mb-3">
+                            <strong>Completion Date:</strong>
+                            <div>{{ project.created_date|date:"F j, Y" }}</div>
+                        </div>
+                        {% if project.live_url %}
+                            <div class="info-item mb-3">
+                                <strong>Live URL:</strong>
+                                <div><a href="{{ project.live_url }}" target="_blank" class="text-decoration-none">View Site</a></div>
+                            </div>
+                        {% endif %}
+                        {% if project.github_url %}
+                            <div class="info-item mb-3">
+                                <strong>Source Code:</strong>
+                                <div><a href="{{ project.github_url }}" target="_blank" class="text-decoration-none">GitHub Repository</a></div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- CTA -->
+                    <div class="sidebar-card bg-primary text-white p-4 rounded-3 mb-4">
+                        <h5 class="mb-3">Interested in Similar Work?</h5>
+                        <p class="mb-3">Let's discuss your project requirements.</p>
+                        <a href="{% url 'portfolio:contact' %}" class="btn btn-light">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Other Projects Section -->
+<section class="related-projects py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title">Other Projects</h2>
+                <p class="section-subtitle">Check out more of my work</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'portfolio:projects' %}" class="btn btn-primary btn-lg">View All Projects</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.project-hero {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.project-image-large img {
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: var(--secondary-color);
+}
+
+.project-meta strong {
+    color: var(--dark-color);
+}
+
+.tech-badge {
+    display: inline-block;
+    background: var(--light-color);
+    color: var(--dark-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0.25rem;
+}
+
+.sidebar-card {
+    border: 1px solid #e9ecef;
+}
+
+.sidebar-card h5 {
+    color: var(--dark-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.info-item strong {
+    color: var(--dark-color);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.info-item div {
+    color: var(--secondary-color);
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .project-hero {
+        text-align: center;
+    }
+    
+    .project-image-large {
+        margin-top: 2rem;
+    }
+}
+</style>
+{% endblock %}
