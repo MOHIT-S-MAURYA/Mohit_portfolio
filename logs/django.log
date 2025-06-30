@@ -193,3 +193,12 @@ Traceback (most recent call last):
 django.urls.exceptions.NoReverseMatch: Reverse for 'projects' not found. 'projects' is not a valid view function or pattern name.
 ERROR 2025-06-30 21:32:48,059 middleware 59980 6167064576 5xx response: {'status_code': 500, 'path': '/', 'method': 'GET', 'ip': '127.0.0.1', 'user': <SimpleLazyObject: <User: admin>>}
 ERROR 2025-06-30 21:32:48,059 basehttp 59980 6167064576 "GET / HTTP/1.1" 500 179007
+WARNING 2025-06-30 21:50:27,328 middleware 59980 6251196416 4xx response: {'status_code': 404, 'path': '/apple-touch-icon.png', 'method': 'GET', 'ip': '127.0.0.1', 'user': 'Anonymous'}
+WARNING 2025-06-30 21:50:27,330 middleware 59980 6234370048 4xx response: {'status_code': 404, 'path': '/apple-touch-icon-precomposed.png', 'method': 'GET', 'ip': '127.0.0.1', 'user': 'Anonymous'}
+WARNING 2025-06-30 21:50:27,330 log 59980 6251196416 Not Found: /apple-touch-icon.png
+WARNING 2025-06-30 21:50:27,332 middleware 59980 6268022784 4xx response: {'status_code': 404, 'path': '/favicon.ico', 'method': 'GET', 'ip': '127.0.0.1', 'user': 'Anonymous'}
+WARNING 2025-06-30 21:50:27,333 log 59980 6234370048 Not Found: /apple-touch-icon-precomposed.png
+WARNING 2025-06-30 21:50:27,333 log 59980 6268022784 Not Found: /favicon.ico
+WARNING 2025-06-30 21:50:27,333 basehttp 59980 6251196416 "GET /apple-touch-icon.png HTTP/1.1" 404 4244
+WARNING 2025-06-30 21:50:27,334 basehttp 59980 6234370048 "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4280
+WARNING 2025-06-30 21:50:27,334 basehttp 59980 6268022784 "GET /favicon.ico HTTP/1.1" 404 4217

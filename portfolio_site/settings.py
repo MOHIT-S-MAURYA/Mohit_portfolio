@@ -215,17 +215,22 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For development - prints to console
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # For production - sends actual emails
-EMAIL_HOST = 'smtp.gmail.com'  # For Gmail
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = ''  # Your email address
-EMAIL_HOST_PASSWORD = ''  # Your app password or email password
-DEFAULT_FROM_EMAIL = ''  # Your email address
-EMAIL_TIMEOUT = 60  # Email timeout in seconds
+
+# SMTP settings - Configure these in local_settings.py or environment variables
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')  # Set in environment or local_settings.py
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')  # Set in environment or local_settings.py
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '60'))
+
+# Contact form settings
+CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', EMAIL_HOST_USER)  # Email where contact form messages will be sent
 
 # Admin settings
 ADMINS = [
-    ('Admin', 'admin@example.com'),  # Update with actual admin email
+    ('Admin', os.environ.get('ADMIN_EMAIL', 'admin@example.com')),  # Set in environment or local_settings.py
 ]
 MANAGERS = ADMINS
 CONTACT_RATE_LIMIT = 5  # Maximum contact form submissions per session
