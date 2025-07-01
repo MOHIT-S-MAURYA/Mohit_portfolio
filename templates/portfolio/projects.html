@@ -3,14 +3,55 @@
 
 {% block title %}Projects - {{ profile.name|default:"Portfolio" }}{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/projects.css' %}">
+{% endblock %}
+
 {% block content %}
 <!-- Projects Hero Section -->
-<section class="projects-hero py-5 bg-dark text-white">
+<section class="projects-hero py-5 text-white">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h1 class="display-4 fw-bold mb-4">My Projects</h1>
-                <p class="lead">A showcase of my recent work and personal projects</p>
+                <h1 class="display-4 fw-bold mb-4 animate-in">My Projects</h1>
+                <p class="lead animate-in">A showcase of my recent work and personal projects</p>
+                <div class="mt-4 animate-in">
+                    <span class="badge bg-light text-dark me-2">{{ projects.count }} Projects</span>
+                    <span class="badge bg-primary">{{ featured_count|default:0 }} Featured</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Filters and Search -->
+<section class="py-3">
+    <div class="container">
+        <div class="project-filter">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="project-search">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="form-control search-input" id="projectSearch" 
+                               placeholder="Search projects...">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="filter-buttons text-md-end">
+                        <button class="btn filter-btn active" data-filter="all">
+                            All<span class="filter-count">{{ projects.count }}</span>
+                        </button>
+                        <button class="btn filter-btn" data-filter="featured">
+                            Featured<span class="filter-count">{{ featured_count|default:0 }}</span>
+                        </button>
+                        <button class="btn filter-btn" data-filter="web">
+                            Web<span class="filter-count" id="web-count">0</span>
+                        </button>
+                        <button class="btn filter-btn" data-filter="mobile">
+                            Mobile<span class="filter-count" id="mobile-count">0</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -20,13 +61,16 @@
 <section class="projects-grid py-5">
     <div class="container">
         {% if projects %}
-            <div class="row">
+            <div class="row" id="projectsGrid">
                 {% for project in projects %}
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="project-card">
+                    <div class="col-lg-4 col-md-6 mb-4 project-item" 
+                         data-category="{% if project.is_featured %}featured {% endif %}{{ project.category|default:'web' }}"
+                         data-title="{{ project.title|lower }}"
+                         data-tech="{{ project.technologies|lower }}">
+                        <div class="project-card hover-lift">
                             <div class="project-image">
                                 {% if project.image %}
-                                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid">
+                                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid" loading="lazy">
                                 {% else %}
                                     <div class="project-placeholder">
                                         <i class="fas fa-image"></i>
@@ -35,16 +79,16 @@
                                 {% endif %}
                                 <div class="project-overlay">
                                     <div class="project-links">
-                                        <a href="{% url 'portfolio:project_detail' project.pk %}" class="btn btn-light btn-sm me-2">
+                                        <a href="{% url 'portfolio:project_detail' project.pk %}" class="btn btn-light btn-sm me-2 hover-scale">
                                             <i class="fas fa-eye"></i> View Details
                                         </a>
                                         {% if project.live_url %}
-                                            <a href="{{ project.live_url }}" class="btn btn-primary btn-sm me-2" target="_blank">
+                                            <a href="{{ project.live_url }}" class="btn btn-primary btn-sm me-2 hover-glow" target="_blank">
                                                 <i class="fas fa-external-link-alt"></i> Live Demo
                                             </a>
                                         {% endif %}
                                         {% if project.github_url %}
-                                            <a href="{{ project.github_url }}" class="btn btn-outline-light btn-sm" target="_blank">
+                                            <a href="{{ project.github_url }}" class="btn btn-outline-light btn-sm hover-scale" target="_blank">
                                                 <i class="fab fa-github"></i> Code
                                             </a>
                                         {% endif %}
@@ -55,7 +99,9 @@
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <h5 class="project-title">{{ project.title }}</h5>
                                     {% if project.is_featured %}
-                                        <span class="badge bg-primary">Featured</span>
+                                        <span class="badge bg-primary">
+                                            <i class="fas fa-star me-1"></i>Featured
+                                        </span>
                                     {% endif %}
                                 </div>
                                 <p class="project-description">{{ project.short_description }}</p>
@@ -64,15 +110,37 @@
                                         <span class="tech-tag">{{ tech }}</span>
                                     {% endfor %}
                                 </div>
-                                <div class="project-meta">
+                                <div class="project-meta d-flex justify-content-between align-items-center">
                                     <small class="text-muted">
-                                        <i class="fas fa-calendar"></i> {{ project.created_date|date:"M Y" }}
+                                        <i class="fas fa-calendar me-1"></i> {{ project.created_date|date:"M Y" }}
                                     </small>
+                                    {% if project.live_url or project.github_url %}
+                                        <div class="project-quick-links">
+                                            {% if project.live_url %}
+                                                <a href="{{ project.live_url }}" class="text-primary me-2" target="_blank" title="Live Demo">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if project.github_url %}
+                                                <a href="{{ project.github_url }}" class="text-dark" target="_blank" title="Source Code">
+                                                    <i class="fab fa-github"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+            
+            <!-- No Results Message -->
+            <div id="noResults" class="text-center py-5" style="display: none;">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No projects found</h4>
+                <p class="text-muted">Try adjusting your search or filter criteria.</p>
+                <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
             </div>
             
             <!-- Pagination -->
@@ -122,7 +190,7 @@
                         <i class="fas fa-folder-open fa-5x text-muted mb-4"></i>
                         <h3 class="text-muted">No Projects Yet</h3>
                         <p class="text-muted">Projects will be displayed here once they are added.</p>
-                        <a href="{% url 'portfolio:contact' %}" class="btn btn-primary">Get In Touch</a>
+                        <a href="{% url 'portfolio:contact' %}" class="btn btn-primary hover-glow">Get In Touch</a>
                     </div>
                 </div>
             </div>
@@ -131,15 +199,21 @@
 </section>
 
 <!-- CTA Section -->
-<section class="cta-section py-5 bg-light">
+<section class="cta-section py-5 bg-primary text-white">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h2>Have a Project in Mind?</h2>
-                <p class="lead">I'm always interested in new opportunities and collaborations.</p>
-                <a href="{% url 'portfolio:contact' %}" class="btn btn-primary btn-lg">Let's Talk</a>
+                <h2 class="mb-3">Have a Project in Mind?</h2>
+                <p class="lead mb-4">I'm always interested in new opportunities and collaborations.</p>
+                <a href="{% url 'portfolio:contact' %}" class="btn btn-light btn-lg hover-scale">
+                    <i class="fas fa-comments me-2"></i>Let's Talk
+                </a>
             </div>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/projects.js' %}"></script>
 {% endblock %}

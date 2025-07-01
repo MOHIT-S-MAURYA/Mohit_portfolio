@@ -1,3 +1,287 @@
+// Enhanced Dark Mode Management
+class ThemeManager {
+    constructor() {
+        this.currentTheme = null;
+        this.prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        this.init();
+    }
+
+    init() {
+        // Initialize theme from localStorage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = this.prefersDark.matches ? 'dark' : 'light';
+        this.setTheme(savedTheme || systemTheme);
+
+        // Listen for system theme changes
+        this.prefersDark.addListener((e) => {
+            if (!localStorage.getItem('theme')) {
+                this.setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+
+        // Add theme toggle functionality
+        this.setupThemeToggle();
+        
+        // Apply theme-specific animations
+        this.applyThemeAnimations();
+    }
+
+    setTheme(theme) {
+        if (this.currentTheme === theme) return;
+        
+        this.currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        this.updateThemeToggle();
+        this.updateMetaThemeColor();
+        this.dispatchThemeChange();
+    }
+
+    updateThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (!themeToggle) return;
+
+        const icon = themeToggle.querySelector('i');
+        if (this.currentTheme === 'dark') {
+            icon.className = 'fas fa-sun';
+            themeToggle.title = 'Switch to Light Mode';
+            themeToggle.setAttribute('aria-label', 'Switch to Light Mode');
+        } else {
+            icon.className = 'fas fa-moon';
+            themeToggle.title = 'Switch to Dark Mode';
+            themeToggle.setAttribute('aria-label', 'Switch to Dark Mode');
+        }
+    }
+
+    updateMetaThemeColor() {
+        let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (!metaThemeColor) {
+            metaThemeColor = document.createElement('meta');
+            metaThemeColor.name = 'theme-color';
+            document.head.appendChild(metaThemeColor);
+        }
+        
+        metaThemeColor.content = this.currentTheme === 'dark' ? '#121212' : '#ffffff';
+    }
+
+    setupThemeToggle() {
+        // Wait for DOM to be ready
+        const setupToggle = () => {
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    this.toggleTheme();
+                });
+            } else {
+                // Retry after a short delay
+                setTimeout(setupToggle, 100);
+            }
+        };
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupToggle);
+        } else {
+            setupToggle();
+        }
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+        this.setTheme(newTheme);
+        
+        // Add visual feedback
+        this.addToggleAnimation();
+    }
+
+    addToggleAnimation() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1)';
+            }, 150);
+        }
+    }
+
+    applyThemeAnimations() {
+        // Add smooth transitions for theme changes
+        const style = document.createElement('style');
+        style.textContent = `
+            *, *::before, *::after {
+                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+            }
+            
+            .hero-section, .hero-section::before {
+                transition: background 0.5s ease !important;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Remove transitions after theme change is complete
+        setTimeout(() => {
+            style.remove();
+        }, 500);
+    }
+
+    dispatchThemeChange() {
+        // Dispatch custom event for theme change
+        const event = new CustomEvent('themeChanged', {
+            detail: { theme: this.currentTheme }
+        });
+        document.dispatchEvent(event);
+    }
+
+    getCurrentTheme() {
+        return this.currentTheme;
+    }
+
+    isDarkMode() {
+        return this.currentTheme === 'dark';
+    }
+}
+
+// Enhanced Dark Mode Image Handling
+class DarkModeImageManager {
+    constructor() {
+        this.images = new Map();
+        this.init();
+    }
+
+    init() {
+        this.scanImages();
+        document.addEventListener('themeChanged', (e) => {
+            this.updateImages(e.detail.theme);
+        });
+    }
+
+    scanImages() {
+        const images = document.querySelectorAll('img[data-dark-src], img[data-light-src]');
+        images.forEach(img => {
+            const lightSrc = img.getAttribute('data-light-src') || img.src;
+            const darkSrc = img.getAttribute('data-dark-src') || img.src;
+            
+            this.images.set(img, { light: lightSrc, dark: darkSrc });
+        });
+    }
+
+    updateImages(theme) {
+        this.images.forEach((sources, img) => {
+            const newSrc = theme === 'dark' ? sources.dark : sources.light;
+            if (img.src !== newSrc) {
+                img.src = newSrc;
+            }
+        });
+    }
+}
+
+// Enhanced Notification System with Dark Mode Support
+class NotificationManager {
+    constructor() {
+        this.container = null;
+        this.init();
+    }
+
+    init() {
+        this.createContainer();
+        document.addEventListener('themeChanged', () => {
+            this.updateContainerTheme();
+        });
+    }
+
+    createContainer() {
+        this.container = document.createElement('div');
+        this.container.className = 'notification-container';
+        this.container.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 350px;
+        `;
+        document.body.appendChild(this.container);
+    }
+
+    updateContainerTheme() {
+        const notifications = this.container.querySelectorAll('.notification');
+        notifications.forEach(notification => {
+            this.applyThemeToNotification(notification);
+        });
+    }
+
+    applyThemeToNotification(notification) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            notification.style.backgroundColor = 'var(--bg-secondary)';
+            notification.style.color = 'var(--text-primary)';
+            notification.style.borderColor = 'var(--border-color)';
+        } else {
+            notification.style.backgroundColor = '#ffffff';
+            notification.style.color = '#333333';
+            notification.style.borderColor = '#dee2e6';
+        }
+    }
+
+    show(message, type = 'info', duration = 5000) {
+        const notification = document.createElement('div');
+        notification.className = `notification alert alert-${type}`;
+        notification.style.cssText = `
+            margin-bottom: 10px;
+            border: 1px solid;
+            border-radius: 8px;
+            padding: 12px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        `;
+        
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span>${message}</span>
+                <i class="fas fa-times" style="margin-left: 10px; opacity: 0.7;"></i>
+            </div>
+        `;
+
+        this.applyThemeToNotification(notification);
+        this.container.appendChild(notification);
+
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 10);
+
+        // Auto remove
+        const removeNotification = () => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        };
+
+        notification.addEventListener('click', removeNotification);
+        if (duration > 0) {
+            setTimeout(removeNotification, duration);
+        }
+
+        return notification;
+    }
+}
+
+// Theme-aware particle color updates
+function updateParticleColors(theme) {
+    const particles = document.querySelectorAll('.particle');
+    particles.forEach(particle => {
+        if (theme === 'dark') {
+            particle.style.backgroundColor = 'rgba(77, 171, 247, 0.1)';
+        } else {
+            particle.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        }
+    });
+}
+
 // Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for anchor links
@@ -342,6 +626,358 @@ document.addEventListener('DOMContentLoaded', function() {
         
         setTimeout(typeWriter, 1000);
     }
+
+    // Enhanced user experience improvements
+    function addScrollAnimations() {
+        const animatedElements = document.querySelectorAll('.contact-item, .skill-card, .project-card, .timeline-item');
+        
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                        entry.target.style.opacity = '1';
+                    }, index * 100);
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        animatedElements.forEach(el => {
+            el.style.opacity = '0';
+            scrollObserver.observe(el);
+        });
+    }
+
+    // Enhanced contact info interactions
+    function enhanceContactInfo() {
+        const contactItems = document.querySelectorAll('.contact-item');
+        
+        contactItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.contact-icon');
+                if (icon) {
+                    icon.style.animation = 'pulse 0.6s ease';
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.contact-icon');
+                if (icon) {
+                    icon.style.animation = '';
+                }
+            });
+            
+            // Add click to copy functionality for email and phone
+            const emailLink = item.querySelector('a[href^="mailto:"]');
+            const phoneLink = item.querySelector('a[href^="tel:"]');
+            
+            if (emailLink) {
+                addCopyToClipboard(emailLink, 'Email address copied to clipboard!');
+            }
+            
+            if (phoneLink) {
+                addCopyToClipboard(phoneLink, 'Phone number copied to clipboard!');
+            }
+        });
+    }
+
+    // Copy to clipboard functionality
+    function addCopyToClipboard(element, message) {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const text = this.textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(message, 'success');
+                
+                // Visual feedback
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                this.style.color = 'var(--success-color)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.color = '';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification(message, 'success');
+            });
+        });
+    }
+
+    // Enhanced notification system
+    function showNotification(message, type = 'info', duration = 3000) {
+        const notification = document.createElement('div');
+        notification.className = `notification alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Auto remove
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }
+        }, duration);
+    }
+
+    // Enhanced form interactions
+    function enhanceFormInteractions() {
+        const formInputs = document.querySelectorAll('.form-control');
+        
+        formInputs.forEach(input => {
+            // Add floating label effect
+            const label = document.querySelector(`label[for="${input.id}"]`);
+            
+            if (label) {
+                input.addEventListener('focus', function() {
+                    label.style.color = 'var(--primary-color)';
+                    label.style.transform = 'translateY(-2px)';
+                    label.style.transition = 'all 0.3s ease';
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        label.style.color = '';
+                        label.style.transform = '';
+                    }
+                });
+            }
+            
+            // Add character counter for textarea
+            if (input.tagName.toLowerCase() === 'textarea') {
+                const maxLength = input.getAttribute('maxlength');
+                if (maxLength) {
+                    const counter = document.createElement('small');
+                    counter.className = 'form-text text-muted character-counter';
+                    counter.style.textAlign = 'right';
+                    counter.style.display = 'block';
+                    input.parentNode.appendChild(counter);
+                    
+                    const updateCounter = () => {
+                        const count = input.value.length;
+                        counter.textContent = `${count}/${maxLength}`;
+                        counter.style.color = count > maxLength * 0.9 ? 'var(--warning-color)' : 
+                                            count === parseInt(maxLength) ? 'var(--danger-color)' : '';
+                    };
+                    
+                    input.addEventListener('input', updateCounter);
+                    updateCounter();
+                }
+            }
+        });
+    }
+
+    // Enhanced social links
+    function enhanceSocialLinks() {
+        const socialLinks = document.querySelectorAll('.social-link');
+        
+        socialLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.animation = 'bounceIn 0.6s ease';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.animation = '';
+            });
+            
+            // Add tooltip
+            const icon = link.querySelector('i');
+            if (icon) {
+                let platform = 'Website';
+                if (icon.classList.contains('fa-linkedin')) platform = 'LinkedIn';
+                else if (icon.classList.contains('fa-github')) platform = 'GitHub';
+                else if (icon.classList.contains('fa-twitter')) platform = 'Twitter';
+                
+                link.setAttribute('title', `Visit my ${platform}`);
+                link.setAttribute('data-bs-toggle', 'tooltip');
+            }
+        });
+        
+        // Initialize tooltips
+        if (typeof bootstrap !== 'undefined') {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+    }
+
+    // Enhanced navbar interactions
+    function enhanceNavbar() {
+        const navbar = document.querySelector('.navbar');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Add active link indicator
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.transition = 'all 0.3s ease';
+                }
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = '';
+                }
+            });
+        });
+        
+        // Enhanced scroll behavior
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', debounce(() => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        }, 10));
+    }
+
+    // Parallax effect for hero section
+    function addParallaxEffect() {
+        const heroSection = document.querySelector('.hero-section');
+        if (heroSection) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                heroSection.style.transform = `translateY(${rate}px)`;
+            });
+        }
+    }
+
+    // Enhanced project cards
+    function enhanceProjectCards() {
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const overlay = this.querySelector('.project-overlay');
+                if (overlay) {
+                    overlay.style.opacity = '1';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const overlay = this.querySelector('.project-overlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                }
+            });
+        });
+    }
+
+    // Initialize all enhancements
+    addScrollAnimations();
+    enhanceContactInfo();
+    enhanceFormInteractions();
+    enhanceSocialLinks();
+    enhanceNavbar();
+    addParallaxEffect();
+    enhanceProjectCards();
+
+    // Add global click handler for external links
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[target="_blank"]');
+        if (link) {
+            // Add a small delay to show click feedback
+            link.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                link.style.transform = '';
+            }, 150);
+        }
+    });
+    
+    // Add keyboard navigation enhancements
+    document.addEventListener('keydown', function(e) {
+        // ESC key to close modals/alerts
+        if (e.key === 'Escape') {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                const closeBtn = alert.querySelector('.btn-close');
+                if (closeBtn) closeBtn.click();
+            });
+        }
+    });
+
+    // Add performance monitoring
+    if ('performance' in window) {
+        window.addEventListener('load', function() {
+            const loadTime = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
+            if (loadTime > 3000) {
+                console.warn('Page load time is slow:', loadTime + 'ms');
+            }
+        });
+    }
+
+    // Add error handling for images
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            const placeholder = document.createElement('div');
+            placeholder.className = 'image-placeholder d-flex align-items-center justify-content-center';
+            placeholder.style.cssText = `
+                height: ${this.height || 200}px;
+                background: #f8f9fa;
+                border: 2px dashed #dee2e6;
+                border-radius: 8px;
+                color: #6c757d;
+            `;
+            placeholder.innerHTML = '<i class="fas fa-image fa-2x"></i>';
+            this.parentNode.insertBefore(placeholder, this);
+        });
+    });
+
+    // Initialize enhanced dark mode functionality
+    window.themeManager = new ThemeManager();
+    window.darkModeImageManager = new DarkModeImageManager();
+    window.notificationManager = new NotificationManager();
+    
+    // Add keyboard shortcut for theme toggle (Ctrl/Cmd + Shift + D)
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'D') {
+            e.preventDefault();
+            window.themeManager.toggleTheme();
+            window.notificationManager.show(
+                `Switched to ${window.themeManager.getCurrentTheme()} mode`,
+                'success',
+                2000
+            );
+        }
+    });
+    
+    // Apply theme-aware particle effects
+    document.addEventListener('themeChanged', function(e) {
+        updateParticleColors(e.detail.theme);
+    });
 });
 
 // Utility functions

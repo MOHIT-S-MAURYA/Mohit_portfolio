@@ -3,13 +3,17 @@
 
 {% block title %}Server Error - {{ block.super }}{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/error-pages.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="error-page">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8 text-center">
                 <div class="error-content">
-                    <h1 class="error-code">500</h1>
+                    <h1 class="error-code error-500">500</h1>
                     <h2 class="error-title">Server Error</h2>
                     <p class="error-description">
                         Something went wrong on our end. We're working to fix this issue.
@@ -28,78 +32,4 @@
         </div>
     </div>
 </div>
-
-<style>
-.error-page {
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-    padding: 2rem 0;
-}
-
-.error-content {
-    padding: 2rem;
-}
-
-.error-code {
-    font-size: 8rem;
-    font-weight: 900;
-    color: #dc3545;
-    margin-bottom: 0;
-    line-height: 1;
-}
-
-.error-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-dark, #333);
-    margin-bottom: 1rem;
-}
-
-.error-description {
-    font-size: 1.1rem;
-    color: var(--text-muted, #666);
-    margin-bottom: 2rem;
-    line-height: 1.6;
-}
-
-.error-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.error-actions .btn {
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.error-actions .btn i {
-    margin-right: 0.5rem;
-}
-
-@media (max-width: 768px) {
-    .error-code {
-        font-size: 6rem;
-    }
-    
-    .error-title {
-        font-size: 2rem;
-    }
-    
-    .error-actions {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .error-actions .btn {
-        width: 100%;
-        max-width: 200px;
-    }
-}
-</style>
 {% endblock %}

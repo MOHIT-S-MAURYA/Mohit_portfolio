@@ -1,0 +1,195 @@
+/* ===== CENTRALIZED COLOR SCHEME ===== */
+/* This file contains all color definitions for the entire project */
+/* Modify these variables to change colors throughout the entire website */
+
+:root {
+    /* ===== PRIMARY BRAND COLORS ===== */
+    --brand-primary: #667eea;
+    --brand-primary-dark: #5a6fd8;
+    --brand-primary-light: #7d8df2;
+    --brand-secondary: #764ba2;
+    --brand-accent: #28a745;
+    
+    /* ===== ADDITIONAL BRAND COLORS ===== */
+    --brand-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --brand-gradient-reverse: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    
+    /* ===== SEMANTIC COLORS ===== */
+    --color-success: #28a745;
+    --color-success-dark: #1e7e34;
+    --color-success-light: #d4edda;
+    
+    --color-warning: #ffc107;
+    --color-warning-dark: #e0a800;
+    --color-warning-light: #fff3cd;
+    
+    --color-danger: #dc3545;
+    --color-danger-dark: #c82333;
+    --color-danger-light: #f8d7da;
+    
+    --color-info: #17a2b8;
+    --color-info-dark: #138496;
+    --color-info-light: #d1ecf1;
+    
+    /* ===== LIGHT THEME COLORS ===== */
+    --bg-primary-light: #ffffff;
+    --bg-secondary-light: #f8f9fa;
+    --bg-tertiary-light: #e9ecef;
+    --bg-accent-light: #f1f3f4;
+    
+    --text-primary-light: #212529;
+    --text-secondary-light: #6c757d;
+    --text-muted-light: #868e96;
+    --text-inverse-light: #ffffff;
+    
+    --border-light: #dee2e6;
+    --border-secondary-light: #e9ecef;
+    --border-accent-light: #ced4da;
+    
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium-light: rgba(0, 0, 0, 0.15);
+    --shadow-heavy-light: rgba(0, 0, 0, 0.25);
+    
+    --overlay-light: rgba(255, 255, 255, 0.9);
+    --overlay-dark-light: rgba(0, 0, 0, 0.7);
+    
+    /* ===== DARK THEME COLORS ===== */
+    --bg-primary-dark: #121212;
+    --bg-secondary-dark: #1e1e1e;
+    --bg-tertiary-dark: #2d2d2d;
+    --bg-accent-dark: #3a3a3a;
+    
+    --text-primary-dark: #ffffff;
+    --text-secondary-dark: #b3b3b3;
+    --text-muted-dark: #888888;
+    --text-inverse-dark: #121212;
+    
+    --border-dark: #404040;
+    --border-secondary-dark: #333333;
+    --border-accent-dark: #555555;
+    
+    --shadow-dark: rgba(0, 0, 0, 0.3);
+    --shadow-medium-dark: rgba(0, 0, 0, 0.5);
+    --shadow-heavy-dark: rgba(0, 0, 0, 0.8);
+    
+    --overlay-light-dark: rgba(30, 30, 30, 0.9);
+    --overlay-dark-dark: rgba(0, 0, 0, 0.9);
+    
+    /* ===== GRADIENT COLORS ===== */
+    --gradient-primary: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-dark) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--brand-secondary) 0%, #495057 100%);
+    --gradient-success: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 100%);
+    --gradient-hero-light: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-hero-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    
+    /* ===== INTERACTIVE STATES ===== */
+    --hover-opacity: 0.8;
+    --active-opacity: 0.9;
+    --disabled-opacity: 0.6;
+    
+    /* ===== ANIMATION TIMING ===== */
+    --transition-fast: 0.15s;
+    --transition-normal: 0.3s;
+    --transition-slow: 0.5s;
+    --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== LIGHT THEME VARIABLES ===== */
+:root[data-theme="light"] {
+    --bg-primary: var(--bg-primary-light);
+    --bg-secondary: var(--bg-secondary-light);
+    --bg-tertiary: var(--bg-tertiary-light);
+    --bg-accent: var(--bg-accent-light);
+    
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --text-muted: var(--text-muted-light);
+    --text-inverse: var(--text-inverse-light);
+    
+    --border-color: var(--border-light);
+    --border-secondary: var(--border-secondary-light);
+    --border-accent: var(--border-accent-light);
+    
+    --shadow-sm: var(--shadow-light);
+    --shadow-md: var(--shadow-medium-light);
+    --shadow-lg: var(--shadow-heavy-light);
+    
+    --overlay-light: var(--overlay-light);
+    --overlay-dark: var(--overlay-dark-light);
+    
+    --gradient-hero: var(--gradient-hero-light);
+}
+
+/* ===== DARK THEME VARIABLES ===== */
+:root[data-theme="dark"] {
+    --bg-primary: var(--bg-primary-dark);
+    --bg-secondary: var(--bg-secondary-dark);
+    --bg-tertiary: var(--bg-tertiary-dark);
+    --bg-accent: var(--bg-accent-dark);
+    
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-muted: var(--text-muted-dark);
+    --text-inverse: var(--text-inverse-dark);
+    
+    --border-color: var(--border-dark);
+    --border-secondary: var(--border-secondary-dark);
+    --border-accent: var(--border-accent-dark);
+    
+    --shadow-sm: var(--shadow-dark);
+    --shadow-md: var(--shadow-medium-dark);
+    --shadow-lg: var(--shadow-heavy-dark);
+    
+    --overlay-light: var(--overlay-light-dark);
+    --overlay-dark: var(--overlay-dark-dark);
+    
+    --gradient-hero: var(--gradient-hero-dark);
+    
+    /* Dark theme specific brand colors */
+    --brand-primary: #4dabf7;
+    --brand-primary-dark: #339af0;
+    --brand-primary-light: #74c0fc;
+    
+    --color-success: #51cf66;
+    --color-warning: #ffd43b;
+    --color-danger: #ff6b6b;
+    --color-info: #74c0fc;
+}
+
+/* ===== COMPONENT-SPECIFIC COLOR CLASSES ===== */
+.bg-brand-primary { background-color: var(--brand-primary) !important; }
+.bg-brand-secondary { background-color: var(--brand-secondary) !important; }
+.text-brand-primary { color: var(--brand-primary) !important; }
+.text-brand-secondary { color: var(--brand-secondary) !important; }
+.border-brand-primary { border-color: var(--brand-primary) !important; }
+
+/* ===== UTILITY CLASSES ===== */
+.bg-primary-custom { background-color: var(--bg-primary); }
+.bg-secondary-custom { background-color: var(--bg-secondary); }
+.bg-tertiary-custom { background-color: var(--bg-tertiary); }
+
+.text-primary-custom { color: var(--text-primary); }
+.text-secondary-custom { color: var(--text-secondary); }
+.text-muted-custom { color: var(--text-muted); }
+
+.border-custom { border-color: var(--border-color); }
+.shadow-custom-sm { box-shadow: 0 0.125rem 0.25rem var(--shadow-sm); }
+.shadow-custom-md { box-shadow: 0 0.5rem 1rem var(--shadow-md); }
+.shadow-custom-lg { box-shadow: 0 1rem 3rem var(--shadow-lg); }
+
+.gradient-primary { background: var(--gradient-primary); }
+.gradient-hero { background: var(--gradient-hero); }
+
+/* ===== THEME TRANSITIONS ===== */
+* {
+    transition: background-color var(--transition-normal) var(--transition-ease),
+                color var(--transition-normal) var(--transition-ease),
+                border-color var(--transition-normal) var(--transition-ease),
+                box-shadow var(--transition-normal) var(--transition-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}

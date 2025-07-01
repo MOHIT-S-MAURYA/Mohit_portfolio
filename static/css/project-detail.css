@@ -1,0 +1,113 @@
+/* Project Detail Page Styles */
+
+.project-hero {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.project-image-large img {
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: var(--secondary-color);
+}
+
+.project-meta strong {
+    color: var(--text-dark);
+}
+
+.tech-badge {
+    display: inline-block;
+    background: var(--light-color);
+    color: var(--text-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+    background: var(--primary-color);
+    color: var(--white-color);
+    transform: translateY(-2px);
+}
+
+.sidebar-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-card:hover {
+    box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+.sidebar-card h5 {
+    color: var(--text-dark);
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.info-item strong {
+    color: var(--text-dark);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.info-item div {
+    color: var(--text-muted);
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .project-hero {
+        text-align: center;
+    }
+    
+    .project-image-large {
+        margin-top: 2rem;
+    }
+}
+
+/* Dark mode support */
+[data-theme="dark"] .project-meta strong,
+[data-theme="dark"] .sidebar-card h5,
+[data-theme="dark"] .info-item strong {
+    color: var(--text-light);
+}
+
+[data-theme="dark"] .tech-badge {
+    background: var(--surface-dark);
+    color: var(--text-light);
+}
+
+[data-theme="dark"] .sidebar-card {
+    border-color: var(--border-dark);
+    background: var(--surface-dark);
+}
+
+[data-theme="dark"] .project-image-large img {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}

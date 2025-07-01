@@ -1,0 +1,164 @@
+/* Email Template Styles */
+
+/* Admin Notification Email Styles */
+.email-body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.email-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.email-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.email-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 300;
+}
+
+.email-content {
+    padding: 30px;
+}
+
+.message-box {
+    background: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 16px;
+    color: #333;
+}
+
+.email-footer {
+    background: #f8f9fa;
+    padding: 20px 30px;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+}
+
+.email-footer p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.btn-email {
+    display: inline-block;
+    background: #007bff;
+    color: white !important;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 15px 0;
+    transition: background-color 0.3s;
+}
+
+.btn-email:hover {
+    background: #0056b3;
+}
+
+/* User Confirmation Email Styles */
+.confirmation-header {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.welcome-message {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.next-steps {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.next-steps h3 {
+    color: #856404;
+    margin-top: 0;
+}
+
+.next-steps ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.next-steps li {
+    margin: 8px 0;
+    color: #856404;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .email-body {
+        padding: 10px;
+    }
+    
+    .email-header {
+        padding: 20px;
+    }
+    
+    .email-header h1 {
+        font-size: 24px;
+    }
+    
+    .email-content {
+        padding: 20px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .email-footer {
+        padding: 15px 20px;
+    }
+}
